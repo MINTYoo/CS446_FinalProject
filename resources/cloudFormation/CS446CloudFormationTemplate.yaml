@@ -1,0 +1,96 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: CloudFormation template to launch EC2, S3, and Lambda
+
+Resources:
+  # S3 Bucket
+  mybucket:
+    Type: "AWS::S3::Bucket"
+    Properties:
+      AccessControl: Private
+      BucketName: "my-lowercase-bucket-name" # Hardcoded lowercase bucket name
+
+  # IAM Role for EC2
+  EC2InstanceRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - ec2.amazonaws.com
+            Action: "sts:AssumeRole"
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonEC2FullAccess
+        - arn:aws:iam::aws:policy/AmazonS3FullAccess
+
+  # EC2 Instance Profile
+  EC2InstanceProfile:
+    Type: "AWS::IAM::InstanceProfile"
+    Properties:
+      Roles:
+        - !Ref EC2InstanceRole
+
+  # EC2 Instance
+  MyEC2Instance:
+    Type: "AWS::EC2::Instance"
+    Properties:
+      InstanceType: t2.micro
+      KeyName: demo # Replace with your actual key pair name
+      ImageId: ami-0fff1b9a61dec8a5f # Replace with the appropriate AMI ID for your region
+      IamInstanceProfile: !Ref EC2InstanceProfile
+
+  # IAM Role for Lambda
+  LambdaExecutionRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action: "sts:AssumeRole"
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+        - arn:aws:iam::aws:policy/AmazonS3FullAccess
+
+  # Lambda Function
+  MyLambdaFunction:
+    Type: "AWS::Lambda::Function"
+    Properties:
+      FunctionName: !Sub "${AWS::StackName}-lambda-function"
+      Runtime: python3.9
+      Handler: index.handler
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Code:
+        ZipFile: |
+          import json
+          import boto3
+
+          def handler(event, context):
+              s3 = boto3.client('s3')
+              bucket_name = event['bucket_name']
+              response = s3.list_objects_v2(Bucket=bucket_name)
+              return {
+                  'statusCode': 200,
+                  'body': json.dumps(response)
+              }
+      Environment:
+        Variables:
+          BUCKET_NAME: !Ref mybucket # Correct reference to mybucket
+
+Outputs:
+  S3BucketName:
+    Description: "The name of the S3 bucket"
+    Value: !Ref mybucket # Correct reference to mybucket
+
+  EC2InstanceId:
+    Description: "The Instance ID of the EC2 instance"
+    Value: !Ref MyEC2Instance
+
+  LambdaFunctionName:
+    Description: "The name of the Lambda function"
+    Value: !Ref MyLambdaFunction
