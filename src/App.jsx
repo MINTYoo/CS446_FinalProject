@@ -55,7 +55,7 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <div className="App content-grid">
       <header>
         <h1>Welcome to My Personal Portfolio</h1>
       </header>

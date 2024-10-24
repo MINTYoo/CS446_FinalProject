@@ -1,66 +1,75 @@
+:root {
+  /* Color Variables */
+  --text: #dfe1fa;
+  --background: #040518;
+  --primary: #7e80eb;
+  --secondary: #911774;
+  --accent: #dc2356;
+
+  /* Font Variables */
+  --font-primary: "Open Sans", sans-serif;
+  --font-secondary: "Satoshi", sans-serif;
+  --font-backup: system-ui;
+
+  /* Font Sizing */
+  --fs-300: clamp(0.94rem, calc(0.92rem + 0.08vw), 0.98rem);
+  --fs-400: clamp(1.13rem, calc(1.06rem + 0.33vw), 1.31rem);
+  --fs-500: clamp(1.35rem, calc(1.21rem + 0.69vw), 1.75rem);
+  --fs-600: clamp(1.62rem, calc(1.37rem + 1.24vw), 2.33rem);
+  --fs-700: clamp(1.94rem, calc(1.54rem + 2.03vw), 3.11rem);
+  --fs-800: clamp(2.33rem, calc(1.7rem + 3.15vw), 4.14rem);
+  --fs-900: clamp(2.8rem, calc(1.85rem + 4.74vw), 5.52rem);
+}
+
 body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-}
-
-header {
-  background-color: #282c34;
-  color: white;
-  padding: 20px;
-  text-align: center;
-}
-
-.section {
-  padding: 20px;
-  margin: 20px auto;
-  max-width: 800px;
-}
-
-h1,
-h2 {
-  margin: 0 0 20px 0;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-ul li {
-  margin-bottom: 20px;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-}
-
-form div {
-  margin-bottom: 15px;
-}
-
-form label {
-  margin-bottom: 5px;
-}
-
-form input,
-form textarea {
-  padding: 10px;
-  font-size: 1rem;
   width: 100%;
+  line-height: 2rem;
+  text-align: center;
+  color: var(--text);
+  background-color: var(--background);
+  font-family: var(--font-primary), var(--font-secondary), var(--font-backup);
+  font-size: var(--fs-400);
+}
+
+.App * {
   box-sizing: border-box;
 }
 
-form button {
-  padding: 10px;
-  background-color: #61dafb;
-  border: none;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s;
+.content-grid {
+  --padding-inline: 1rem;
+  --content-max-width: 1400px;
+  --breakout-max-width: 1800px;
+
+  --breakout-size: calc(
+    (var(--breakout-max-width) - var(--content-max-width)) / 2
+  );
+
+  display: grid !important;
+  grid-template-columns:
+    [full-width-start] minmax(var(--padding-inline), 1fr)
+    [breakout-start] minmax(0, var(--breakout-size))
+    [content-start] min(
+      100% - (var(--padding-inline) * 2),
+      var(--content-max-width)
+    )
+    [content-end]
+    minmax(0, var(--breakout-size)) [breakout-end]
+    minmax(var(--padding-inline), 1fr) [full-width-end];
 }
 
-form button:hover {
-  background-color: #21a1f1;
+.content-grid > :not(.breakout, .full-width),
+.full-width > :not(.breakout, .full-width) {
+  grid-column: content;
+}
+
+.content-grid > .breakout {
+  grid-column: breakout;
+}
+
+.content-grid > .full-width {
+  grid-column: full-width;
+  /* Taken out because it would not allow flexbox */
+  /* display: grid; */
+  /* Taken out because woud only apply to bg */
+  /* grid-template-columns: inherit; */
 }
