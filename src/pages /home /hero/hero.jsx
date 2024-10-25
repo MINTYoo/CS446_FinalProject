@@ -1,6 +1,6 @@
 import React from "react";
 import "./hero.css";
-// import profileImage from "./image.png";
+import profileImage from "./image.png";
 
 function Hero() {
   return (
@@ -13,7 +13,7 @@ function Hero() {
         </a>
       </div>
       <div className="hero-image">
-        {/* <img src={profileImage} alt="Profile" /> */}
+        <img src={profileImage} alt="Profile" />
       </div>
     </section>
   );
