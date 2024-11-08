@@ -1,59 +1,16 @@
 import React, { useState } from "react";
 import "./App.css";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./pages /home /home";
+import "./index.css";
 
-function App() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-  const [message, setMessage] = useState("");
-  const [count, setCount] = useState(0); // Keeping count for the provided data
+// import Projects from "./pages/projects";
+// import About from "./pages/about";
+// import Contact from "./pages/contact";
+// import Navbar from "./components/Navbar";
 
-  // Handle input change
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  // Function to send data to Lambda function URL
-  const sendDataToLambda = async (e) => {
-    e.preventDefault(); // Prevent the form from submitting normally
-
-    const data = {
-      name: formData.name,
-      email: formData.email,
-      message: formData.message,
-      count: count, // Example count variable, could be used for analytics
-    };
-
-    console.log(JSON.stringify(data)); // Log the data being sent
-
-    try {
-      const response = await fetch(
-        "https://082zd7uws7.execute-api.us-east-1.amazonaws.com/portfolio",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-
-      const result = await response.json(); // Parse the response as JSON
-      console.log("Lambda Response:", result); // Log the full response
-      setMessage(`Lambda Response: ${result.message}`); // Set the response message
-    } catch (error) {
-      console.error("Error sending data to Lambda:", error);
-      setMessage("Failed to send data");
-    }
-  };
-
+const App = () => {
   return (
     <div className="App content-grid">
       <header>
