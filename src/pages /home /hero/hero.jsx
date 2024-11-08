@@ -1,6 +1,6 @@
 import React from "react";
 import "./hero.css";
-import profileImage from "./assets/profile.jpg"; // Make sure to have an image in this path
+
 
 function Hero() {
   return (
@@ -17,7 +17,7 @@ function Hero() {
         </a>
       </div>
       <div className="hero-image">
-        <img src={profileImage} alt="Profile" />
+        <img  alt="Profile" />
       </div>
     </section>
   );
