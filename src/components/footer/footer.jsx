@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Footer() {
   return (
@@ -13,27 +14,34 @@ function Footer() {
           </p>
         </div>
         <div className="footer-links flex space-x-6">
-          <a
-            href="#"
+          <Link
+            to="/"
             className="text-gray-400 hover:text-indigo-500 transition"
             style={{ fontFamily: "var(--font-secondary)" }}
           >
-            About
-          </a>
-          <a
-            href="#"
+            Home
+          </Link>
+          <Link
+            to="/actor"
             className="text-gray-400 hover:text-indigo-500 transition"
             style={{ fontFamily: "var(--font-secondary)" }}
           >
-            Projects
-          </a>
-          <a
-            href="#"
+            Actor
+          </Link>
+          <Link
+            to="/author"
             className="text-gray-400 hover:text-indigo-500 transition"
             style={{ fontFamily: "var(--font-secondary)" }}
           >
-            Contact
-          </a>
+            Author
+          </Link>
+          <Link
+            href="/wrestler"
+            className="text-gray-400 hover:text-indigo-500 transition"
+            style={{ fontFamily: "var(--font-secondary)" }}
+          >
+            Wrestler
+          </Link>
         </div>
       </div>
     </footer>
