@@ -36,7 +36,7 @@ function Footer() {
             Author
           </Link>
           <Link
-            href="/wrestler"
+            to="/wrestler"
             className="text-gray-400 hover:text-indigo-500 transition"
             style={{ fontFamily: "var(--font-secondary)" }}
           >
