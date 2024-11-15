@@ -55,7 +55,7 @@ function Projects() {
               src={project.image}
               alt={project.title}
               className="project-image w-full h-48 object-cover"
-              style={{ width: "100%", height: "256px", objectFit: "cover" }} // Enforces consistent height and width
+              style={{ width: "100%", height: "256px", objectFit: "cover" }} 
               />
             <div className="p-6">
               <h3
@@ -79,6 +79,7 @@ function Projects() {
                 href={project.link}
                 className="inline-block px-6 py-2 bg-gradient-to-r from-indigo-500 to-purple-500 text-gray-900 font-semibold rounded-full shadow-md hover:scale-105 hover:shadow-lg transition"
                 style={{ fontFamily: "var(--font-primary)", color: "var(--background)" }}
+                
               >
                 Learn More
               </a>
