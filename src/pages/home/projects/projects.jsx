@@ -38,7 +38,7 @@ function Projects() {
   ];
 
   return (
-    <section className="projects py-16 px-8  text-white">
+    <section className="projects py-16 px-8 text-white">
       <h2
         className="text-4xl font-extrabold mb-12 text-center"
         style={{ fontFamily: "var(--font-primary)" }}

@@ -3,7 +3,7 @@ import profileImage from "./image.png";
 
 function Hero() {
   return (
-    <section className="hero flex flex-col md:flex-row items-center justify-center md:justify-between px-8 py-16 md:px-20  text-white min-h-screen">
+    <section className="hero flex flex-col md:flex-row items-center justify-center md:justify-between px-8 py-16 md:px-20 text-white min-h-screen">
       <div className="hero-content max-w-lg md:max-w-xl mb-8 md:mb-0 text-center md:text-left space-y-6">
         <h1
           className="text-5xl md:text-6xl font-extrabold leading-tight drop-shadow-lg"

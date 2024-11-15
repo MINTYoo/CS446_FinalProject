@@ -1,0 +1,47 @@
+/* Basic styles for the hero section */
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 50px;
+  color: white;
+  margin: 0 auto;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+.hero-content {
+  max-width: 50%;
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+.hero-button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #61dafb;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.hero-button:hover {
+  background-color: #21a1f1;
+}
+
+.hero-image img {
+  width: 350px;
+  border-radius: 50%;
+  object-fit: cover;
+}
