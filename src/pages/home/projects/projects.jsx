@@ -55,7 +55,8 @@ function Projects() {
               src={project.image}
               alt={project.title}
               className="project-image w-full h-48 object-cover"
-            />
+              style={{ width: "100%", height: "256px", objectFit: "cover" }} // Enforces consistent height and width
+              />
             <div className="p-6">
               <h3
                 className="text-2xl font-bold mb-4"
