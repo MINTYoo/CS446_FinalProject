@@ -1,7 +1,7 @@
-import "./App.css";
+//import "./App.css";
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./pages /home /home";
+import Home from "./pages/home/home";
 import './index.css'; 
 
 // import Projects from "./pages/projects";
@@ -11,6 +11,7 @@ import './index.css';
 
 const App = () => {
   return (
+    
     <Router>
       {/* <Navbar /> {} */}
       <Routes>
