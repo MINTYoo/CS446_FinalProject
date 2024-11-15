@@ -1,8 +1,8 @@
 import React from "react";
-import "./projects.css";
 import wrestlingImg from "./image.png";
 import actorImg from "./actor.png";
 import authorImg from "./book.png";
+import { Link } from "react-router-dom";
 
 function Projects() {
   const projectData = [
@@ -15,14 +15,14 @@ function Projects() {
         "No one knew I was in this movie",
       ],
       image: actorImg,
-      link: "#",
+      link: "/Actor",
     },
     {
       title: "WWE Champion",
       description: "Beat The Pebble down.",
       features: ["4 Time Champion", "Acrobatics", "Can't see me"],
       image: wrestlingImg,
-      link: "#",
+      link: "/wrestler",
     },
     {
       title: "Author",
@@ -33,7 +33,7 @@ function Projects() {
         "Was in Fast and the Furious once...family.",
       ],
       image: authorImg,
-      link: "#",
+      link: "/Author",
     },
   ];
 
@@ -55,12 +55,15 @@ function Projects() {
               src={project.image}
               alt={project.title}
               className="project-image w-full h-48 object-cover"
-              style={{ width: "100%", height: "256px", objectFit: "cover" }} 
-              />
+              style={{ width: "100%", height: "256px", objectFit: "cover" }}
+            />
             <div className="p-6">
               <h3
                 className="text-2xl font-bold mb-4"
-                style={{ color: "var(--primary)", fontFamily: "var(--font-secondary)" }}
+                style={{
+                  color: "var(--primary)",
+                  fontFamily: "var(--font-secondary)",
+                }}
               >
                 {project.title}
               </h3>
@@ -75,14 +78,16 @@ function Projects() {
                   <li key={idx}>{feature}</li>
                 ))}
               </ul>
-              <a
-                href={project.link}
+              <Link
+                to={project.link}
                 className="inline-block px-6 py-2 bg-gradient-to-r from-indigo-500 to-purple-500 text-gray-900 font-semibold rounded-full shadow-md hover:scale-105 hover:shadow-lg transition"
-                style={{ fontFamily: "var(--font-primary)", color: "var(--background)" }}
-                
+                style={{
+                  fontFamily: "var(--font-primary)",
+                  color: "var(--background)",
+                }}
               >
                 Learn More
-              </a>
+              </Link>
             </div>
           </div>
         ))}
