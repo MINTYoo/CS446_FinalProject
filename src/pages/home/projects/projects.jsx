@@ -14,7 +14,7 @@ function Projects() {
     try {
       console.log(`sending project name: ${projectName}`); // Make sure projectName is being logged here
       const response = await axios.post(
-        "https://082zd7uws7.execute-api.us-east-1.amazonaws.com/portfolio",
+        "https://r5bhc2kfha.execute-api.us-east-1.amazonaws.com",
         { projectName } // Pass the projectName as part of the request body
       );
       console.log(`Tracked click for: ${projectName}`);
