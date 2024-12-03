@@ -1,4 +1,5 @@
-import React, { useEffect, useState, axios } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -21,7 +22,7 @@ ChartJS.register(
 );
 
 const Admin = () => {
-  const [projects, setProjects] = useState([]);
+  const [projects, setProjects] = useState([]); // Default to an empty array
   const [loading, setLoading] = useState(true);
 
   const fetchData = async () => {
@@ -29,7 +30,10 @@ const Admin = () => {
       const response = await axios.get(
         "https://r5bhc2kfha.execute-api.us-east-1.amazonaws.com/"
       );
-      setProjects(response.data.items);
+      // Access the 'projects' array from the response
+      if (response.data && response.data.projects) {
+        setProjects(response.data.projects);
+      }
     } catch (error) {
       console.error("Error fetching projects data:", error);
     } finally {
@@ -41,13 +45,13 @@ const Admin = () => {
     fetchData();
   }, []);
 
-  // Chart Data Preparation
+  // Chart Data Preparation (safe to map over projects)
   const chartData = {
-    labels: projects.map((project) => project.projectName.S), // Assuming project names are stored in 'projectName'
+    labels: projects.map((project) => project.projectName || "Unknown Project"),
     datasets: [
       {
         label: "Project Views",
-        data: projects.map((project) => parseInt(project.Views.N)), // Assuming 'Counter' is the views field
+        data: projects.map((project) => project.Views || 0),
         backgroundColor: "rgba(75, 192, 192, 0.2)",
         borderColor: "rgba(75, 192, 192, 1)",
         borderWidth: 1,
@@ -91,17 +95,25 @@ const Admin = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {projects.map((project, index) => (
-                    <tr
-                      key={index}
-                      className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
-                    >
-                      <td className="px-6 py-4 font-medium text-gray-900 dark:text-white">
-                        {project.projectName.S}
+                  {projects.length > 0 ? (
+                    projects.map((project, index) => (
+                      <tr
+                        key={index}
+                        className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                      >
+                        <td className="px-6 py-4 font-medium text-gray-900 dark:text-white">
+                          {project.projectName || "Unknown Project"}
+                        </td>
+                        <td className="px-6 py-4">{project.Views || 0}</td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="2" className="text-center px-6 py-4">
+                        No projects available
                       </td>
-                      <td className="px-6 py-4">{project.Counter.N}</td>
                     </tr>
-                  ))}
+                  )}
                 </tbody>
               </table>
             </div>
