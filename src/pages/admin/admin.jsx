@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, axios } from "react";
 import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -24,21 +24,17 @@ const Admin = () => {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Mock data for projects
-  const mockData = [
-    { projectName: { S: "Project A" }, Counter: { N: "100" } },
-    { projectName: { S: "Project B" }, Counter: { N: "150" } },
-    { projectName: { S: "Project C" }, Counter: { N: "50" } },
-    { projectName: { S: "Project D" }, Counter: { N: "200" } },
-    { projectName: { S: "Project E" }, Counter: { N: "120" } },
-  ];
-
-  // Simulating an API call and setting mock data
   const fetchData = async () => {
-    setTimeout(() => {
-      setProjects(mockData);
+    try {
+      const response = await axios.get(
+        "https://r5bhc2kfha.execute-api.us-east-1.amazonaws.com/"
+      );
+      setProjects(response.data.items);
+    } catch (error) {
+      console.error("Error fetching projects data:", error);
+    } finally {
       setLoading(false);
-    }, 1000);
+    }
   };
 
   useEffect(() => {
@@ -51,7 +47,7 @@ const Admin = () => {
     datasets: [
       {
         label: "Project Views",
-        data: projects.map((project) => parseInt(project.Counter.N)), // Assuming 'Counter' is the views field
+        data: projects.map((project) => parseInt(project.Views.N)), // Assuming 'Counter' is the views field
         backgroundColor: "rgba(75, 192, 192, 0.2)",
         borderColor: "rgba(75, 192, 192, 1)",
         borderWidth: 1,
