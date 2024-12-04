@@ -1,10 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+
 import wrestlingImg from "./image.png";
 import actorImg from "./actor.png";
 import authorImg from "./book.png";
-import { Link } from "react-router-dom";
 
 function Projects() {
+  const [loading, setLoading] = useState(false);
+
+  const handleTrackClick = async (projectName) => {
+    setLoading(true);
+    try {
+      console.log(`sending project name: ${projectName}`); // Make sure projectName is being logged here
+      const response = await axios.post(
+        "https://r5bhc2kfha.execute-api.us-east-1.amazonaws.com",
+        { projectName } // Pass the projectName as part of the request body
+      );
+      console.log(`Tracked click for: ${projectName}`);
+      console.log(response.data); // Log the Lambda response (for testing)
+    } catch (error) {
+      console.error("Error tracking click:", error);
+      if (error.response) {
+        alert(`Failed to track click. Server error: ${error.response.status}`);
+      } else if (error.request) {
+        alert("Failed to track click. No response from the server.");
+      } else {
+        alert(`Error: ${error.message}`);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const projectData = [
     {
       title: "Fred: The Movie",
@@ -80,13 +108,20 @@ function Projects() {
               </ul>
               <Link
                 to={project.link}
-                className="inline-block px-6 py-2 bg-gradient-to-r from-indigo-500 to-purple-500 text-gray-900 font-semibold rounded-full shadow-md hover:scale-105 hover:shadow-lg transition"
+                className={`inline-block px-6 py-2 bg-gradient-to-r from-indigo-500 to-purple-500 text-gray-900 font-semibold rounded-full shadow-md hover:scale-105 hover:shadow-lg transition ${
+                  loading ? "opacity-50 pointer-events-none" : ""
+                }`}
+                onClick={() => handleTrackClick(project.title)}
                 style={{
                   fontFamily: "var(--font-primary)",
                   color: "var(--background)",
                 }}
               >
-                Learn More
+                {loading ? (
+                  <span className="animate-spin">Loading...</span>
+                ) : (
+                  "Learn More"
+                )}
               </Link>
             </div>
           </div>
