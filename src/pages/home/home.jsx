@@ -1,7 +1,7 @@
 import React from "react";
 import Hero from "./hero/hero";
 import Projects from "./projects/projects";
-import Footer from "./footer/footer";
+import Footer from "../../components/footer/footer";
 
 function Home() {
   return (
